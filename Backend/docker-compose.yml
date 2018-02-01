@@ -1,0 +1,16 @@
+version: "3"
+services:
+    backend:
+        image: hallihallo5berlin/backend:latest
+        volumes:
+            - /etc:/hypervisor_etc
+        ports: 
+            - "8000:80"
+        deploy:
+            mode: replicated
+            replicas: 5
+            restart_policy:
+                condition: "on-failure"
+            placement:
+                constraints:
+                    - node.hostname != cc-docker-frontend

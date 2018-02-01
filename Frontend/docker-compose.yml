@@ -1,0 +1,18 @@
+version: "3"
+services:
+    frontend:
+        environment:
+            - CC_BACKEND_SERVERS=${CC_BACKEND_SERVERS}
+        image: hallihallo5berlin/cc3-2-frontend:frontend
+        volumes:
+            - /etc:/hypervisor_etc
+        ports: 
+            - "80:80"
+        deploy:
+            mode: replicated
+            replicas: 2
+            restart_policy:
+                condition: "on-failure"
+            placement:
+                constraints:
+                    - node.hostname == cc-docker-frontend
